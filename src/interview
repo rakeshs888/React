@@ -1,0 +1,232 @@
+/*
+ * An es5 util file. Transform this to ES6.
+ */
+
+module.exports = {};
+
+// Take an array of key-value-pairs and turn them into an object
+// Array contents would be expected to be in form {key: "key", value: "value"}
+// Default arr is []
+module.exports.createObjectFromArray = function(arr) {
+    var myArr = arr || [];
+    var myObj = {};
+
+    for (var i = 0; i < myArr.length; i++) {
+        myObj[myArr[i].key] = myArr[i].value;
+    }
+
+    return myObj;
+};
+module.exports.createObjectFromArray = (arr=[]) =>  arr.reduce((acc, item)=>{
+  	acc[item.key]= item.value;
+  }, {});
+
+// Take an array of numbers and add value to them
+// Default value is 0
+// Default arr is []
+module.exports.incrementArrayValues = function(arr, value) {
+    var myArr = arr || [];
+    var myValue = value || 0;
+    var newArr = [];
+
+    for (var i = 0; i < myArr.length; i++) {
+        newArr[i] = myArr[i] + myValue;
+    }
+
+    return newArr;
+};
+
+
+
+// Take an array of numbers and sum them
+// Default arr is []
+// Default return value is 0
+module.exports.sumArray = function(arr) {
+  var myArr = arr || [];
+  var myValue = 0;
+
+  if (myArr.length) {
+      for (var i = 0; i < myArr.length; i++) {
+          myValue += myArr[i];
+      }
+      return myValue;
+  } else {
+      return 0;
+  }
+};
+
+// Take an object that looks like { name: 'Jim', timeOfDay: 'evening', greeting: 'How are you?' }
+// return a string that looks like 'Hi name! Good timeOfDay. greeting';
+// Default name is Jim.
+// Default time of day is evening.
+// Default greeting is How are you?
+module.exports.makeGreeting = function(obj) {
+    var myObj = obj || {};
+    var name = typeof myObj.name !== 'undefined' ? obj.name : 'Jim';
+    var timeOfDay = typeof myObj.timeOfDay !== 'undefined' ? obj.timeOfDay : 'evening';
+    var greeting = typeof myObj.greeting !== 'undefined' ? obj.greeting : 'How are you?';
+    var myString = 'Hi ' + name + '! Good ' + timeOfDay + '. ' + greeting;
+
+    return myString;
+};
+
+
+// Take an array with two values and add them together
+// Default values to 0
+module.exports.add = function(arr) {
+    var myArr = arr || [];
+    var a = myArr[0] || 0;
+    var b = myArr[1] || 0;
+
+    return a + b;
+};
+
+module.exports.add = ([a=0,b=0]) => a+b; 
+// Take an array of objects and merge them together
+// Assume every element is an object
+module.exports.concatenateObj = function(arr) {
+    var myArr = arr || [];
+    var myObj = {};
+
+    for (var i = 0; i < myArr.length; i++) {
+        for (var key in myArr[i]) {
+            if (myArr[i].hasOwnProperty(key)) {
+                myObj[key] = myArr[i][key];
+            }
+        }
+    }
+
+    return myObj;
+};
+
+// Take an object and export it to an array of key-value pairs
+// Ex: { a: 1, b: 2 } becomes [[a,1],[b,2]]
+// Expect default empty object
+module.exports.deconstructObject = function(obj) {
+    var myObj = obj || {};
+    var myArr = [];
+
+    for (var key in myObj) {
+        if (myObj.hasOwnProperty(key)) {
+            myArr.push([key, myObj[key]]);
+        }
+    }
+
+    return myArr;
+};
+
+// Take a number and make an array of length 'n'. Fill array with that number.
+// Expect default number and length of 0;
+module.exports.fillArray = function(num, length) {
+    var myNum = num || 0;
+    var myLength = length || 0;
+    var myArr = [];
+
+    for (var i = 0; i < myLength; i++) {
+        myArr.push(myNum);
+    }
+
+    return myArr;
+};
+
+// Take an array and return only truthy values.
+// Expect default array of [];
+module.exports.removeFalsy = function(arr) {
+  var myArr = arr || [];
+  var newArr = [];
+
+  for (var i = 0; i <= myArr.length; i++) {
+      if (!!myArr[i]) {
+          newArr.push(myArr[i]);
+      }
+  }
+
+  return newArr;
+};
+
+module.exports.removeFalsy = (arr=[]) => arr.filter((item)=>{
+  return !!item;
+});
+
+
+
+
+// Convert an array to an array of strings!
+module.exports.convertToString = function(arr) {
+    var myArr = arr || [];
+    var newArr = [];
+
+    for (var i = 0; i < myArr.length; i++) {
+        newArr.push(myArr[i].toString());
+    }
+
+    return newArr;
+};
+
+// Return only array elements that are prime
+module.exports.isPrime = function(arr) {
+    var myArr = arr || [];
+    var newArr = [];
+
+    for (var i = 0; i < myArr.length; i++) {
+        var maximum = Math.floor(Math.sqrt(myArr[i]));
+        var isPrime = true;
+        if (myArr[i] > 2) {
+            for (var j = 2; j <= maximum; j++) {
+                if (myArr[i] % j === 0) {
+                    isPrime = false;
+                }
+            }
+        }
+
+        if (isPrime) {
+            newArr.push(myArr[i]);
+        }
+    }
+
+    return newArr;
+};
+
+
+
+// Write a react component named List which 
+// returns an ordered list that takes two props
+// id - the id for the list
+// content - an array of strings that are the content each of list item
+// -- empty content elements should not be rendered
+// props.id , prop.content
+// Add a new prop called firstItem and have that render in the 
+// list as "First Item:" + firstItem
+
+
+
+let List= ({id=1,content= []})=> {
+  return (
+    <ul id={id}>
+      content.filter((item){ return !!item;}).map((item)=>{return <li>{item}</li>})
+    </ul>
+  );
+};
+// 
+
+List.propTypes = {
+  id : PropTypes.number,
+  content : PropTypes.array.isRequired,
+  firstItem : PropTypes.string
+}
+
+List.defaultProps = {
+  id : 1,
+  firstItem : `This is a first item string ${id}`
+}
+const obj = {
+  name : 'jhon',
+  address : {
+    city : 'New York'
+  }
+};
+
+const {name, address: {city}} = obj;
+// name = 'jhon', city : 'New York';
+
+

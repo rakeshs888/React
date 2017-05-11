@@ -1,0 +1,125 @@
+<form class="form1" method="POST" action="http:domain.com:80/path">
+<div class="form-group">
+<label for="name">Name</label>
+    <input type="text" name="name" id="name">
+<div>
+<div class="form-group">
+<label>Gender:</label>
+<div class="radio">
+   <input name="gender" id="F" type="radio" value="F">
+<label for="F">F
+</label>
+</div>
+<div class="radio">
+    <input name="gender" id="M" type="radio" value="M">
+<label for="M">M
+</label>
+</div>
+</div>
+<div>
+<div form="form-group">
+<label for="email">email</label>
+<input name="email" id="email" type="email" >
+</div>
+<input type="submit" value="Submit" >
+</form>
+
+
+form.form1 div.radio>input[type="radio"] {
+    visibility: none;
+}
+div.radio>label {
+    border: 1px solid black;
+    display : inline-block;
+    padding  : 5px;
+    border-radius : 5px; 
+    }
+
+div.radio>input[type="radio"]:checked + label{
+    background-color: green;
+    color:white;
+}
+
+
+
+
+
+
+
+
+var testFunc = function testFunc(test) {
+    if (test) { // undefined --> falsy
+        var a = 4;
+    }
+    console.log(a);// undefined 
+}   
+testFunc(); //what is printed? Why?
+
+
+[1,[2,3],[4,[5,6],7],8,"foo"] // array, number
+
+[1,2,...9]
+
+
+function deflate(arr) {
+    var newArr = [];
+    function func1(value) {
+    if(!Array.isArray(value)) {
+        newArr.push(value);
+    } else (Array.isArray(value)){
+        value.forEach(function(item){
+            func1(item);
+        })
+    }
+    }
+    func1(arr);
+    return newArr;
+}
+
+// 
+
+function deflate (arr) {
+    return arr.reduce(function(acc, item){
+        return acc.concat(Array.isArray(item)) ? deflate(item) : item;
+    },[])
+}
+function Person(name) {
+    this.name = name;
+}
+Person.prototype.logName = function() {
+    console.log(this.name);
+}
+
+
+var bob = new Person('Bob');
+bob.name = 'Alice';
+bob.logName();
+
+function Person(na) {
+    var name = na;
+    this.logName = function() {
+        console.log(name);
+    }
+}
+
+functon foo() {
+// heavy taxing stuff like ajax
+}
+
+// call needs happen once in 1 min -- disabled 
+
+function throttle(callback) {
+    var flag;
+    return function(event) {
+        if(!flag) {
+            flag= true;
+            callback(event);
+            setTimeout(function() {
+                flag = false;
+            }, 60*1000);
+        }
+    }
+}
+window.addEventListener('scroll',throttle(foo));
+
+
